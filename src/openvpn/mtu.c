@@ -52,6 +52,11 @@ calc_packet_id_size_dc(const struct options *options, const struct key_type *kt)
 {
     bool tlsmode = options->tls_server || options->tls_client;
 
+    if (tlsmode && (options->imported_protocol_flags & CO_EPOCH_DATA_KEY_FORMAT))
+    {
+        return packet_id_size_epoch();
+    }
+
     bool packet_id_long_form = !tlsmode || cipher_kt_mode_ofb_cfb(kt->cipher);
 
     return packet_id_size(packet_id_long_form);

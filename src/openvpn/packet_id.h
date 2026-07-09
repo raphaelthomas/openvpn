@@ -324,6 +324,12 @@ packet_id_size(bool long_form)
     return sizeof(packet_id_type) + (long_form ? sizeof(net_time_t) : 0);
 }
 
+static inline int
+packet_id_size_epoch(void)
+{
+    return sizeof(uint64_t);
+}
+
 static inline bool
 packet_id_close_to_wrapping(const struct packet_id_send *p)
 {
